@@ -3,12 +3,32 @@
 let apiKeys = {};
 let investigatorOptions = {};
 
+// Listen for storage changes to update API keys in real-time
+chrome.storage.onChanged.addListener((changes, namespace) => {
+  if (namespace === 'local') {
+    if (changes.apiKeys) {
+      apiKeys = changes.apiKeys.newValue || {};
+      updateApiToolsVisibility();
+    }
+    if (changes.investigatorOptions) {
+      investigatorOptions = changes.investigatorOptions.newValue || {};
+      const passiveToggle = document.getElementById('passiveModeToggle');
+      if (passiveToggle) {
+        passiveToggle.checked = investigatorOptions.passiveMode || false;
+      }
+    }
+  }
+});
+
 // Initialize popup
 document.addEventListener('DOMContentLoaded', async () => {
   // Load API keys and options from storage
   const storage = await chrome.storage.local.get(['apiKeys', 'investigatorOptions', 'pendingInvestigation']);
   apiKeys = storage.apiKeys || {};
   investigatorOptions = storage.investigatorOptions || {};
+  
+  console.log('Popup loaded - API keys found:', Object.keys(apiKeys));
+  console.log('Popup loaded - Options:', investigatorOptions);
   
   // Set passive mode toggle state
   const passiveToggle = document.getElementById('passiveModeToggle');

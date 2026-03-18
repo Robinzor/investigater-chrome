@@ -31,21 +31,21 @@ document.addEventListener('DOMContentLoaded', async () => {
 // Save settings
 async function saveSettings() {
   const apiKeys = {
-    virustotal: document.getElementById('virustotal').value.trim(),
-    abuseipdb: document.getElementById('abuseipdb').value.trim(),
-    alienvault: document.getElementById('alienvault').value.trim(),
-    abusech: document.getElementById('abusech').value.trim(),
-    urlquery: document.getElementById('urlquery').value.trim(),
-    urlscan: document.getElementById('urlscan').value.trim(),
-    ipinfo: document.getElementById('ipinfo').value.trim(),
-    hybridanalysis: document.getElementById('hybridanalysis').value.trim(),
-    shodan: document.getElementById('shodan').value.trim(),
-    greynoise: document.getElementById('greynoise').value.trim()
+    virustotal: document.getElementById('virustotal')?.value.trim() || '',
+    abuseipdb: document.getElementById('abuseipdb')?.value.trim() || '',
+    alienvault: document.getElementById('alienvault')?.value.trim() || '',
+    abusech: document.getElementById('abusech')?.value.trim() || '',
+    urlquery: document.getElementById('urlquery')?.value.trim() || '',
+    urlscan: document.getElementById('urlscan')?.value.trim() || '',
+    ipinfo: document.getElementById('ipinfo')?.value.trim() || '',
+    hybridanalysis: document.getElementById('hybridanalysis')?.value.trim() || '',
+    shodan: document.getElementById('shodan')?.value.trim() || '',
+    greynoise: document.getElementById('greynoise')?.value.trim() || ''
   };
   
   const investigatorOptions = {
-    autoResolveIP: document.getElementById('autoResolveIP').checked,
-    passiveMode: document.getElementById('passiveMode').checked
+    autoResolveIP: document.getElementById('autoResolveIP')?.checked || false,
+    passiveMode: document.getElementById('passiveMode')?.checked || false
   };
   
   // Remove empty keys
@@ -53,10 +53,20 @@ async function saveSettings() {
     if (!apiKeys[key]) delete apiKeys[key];
   });
   
+  console.log('Saving API keys:', Object.keys(apiKeys));
+  console.log('Saving options:', investigatorOptions);
+  
   try {
     await chrome.storage.local.set({ apiKeys, investigatorOptions });
-    showSuccess('Settings saved successfully! ✓');
+    
+    // Verify save worked
+    const verification = await chrome.storage.local.get(['apiKeys', 'investigatorOptions']);
+    console.log('Verification - Saved keys:', verification.apiKeys);
+    console.log('Verification - Saved options:', verification.investigatorOptions);
+    
+    showSuccess(`Settings saved successfully! ✓ (${Object.keys(apiKeys).length} API keys saved)`);
   } catch (error) {
+    console.error('Save error:', error);
     showError(`Failed to save settings: ${error.message}`);
   }
 }
