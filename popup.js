@@ -2931,7 +2931,7 @@ const TOOL_CONFIGS = {
     query: async (observable, type, apiKey) => {
       // PhishTank implementation using CSV blacklist download (robinzor method)
       try {
-        const PHISHTANK_CSV_URL = 'http://data.phishtank.com/data/online-valid.csv ';
+        const PHISHTANK_CSV_URL = 'https://data.phishtank.com/data/online-valid.csv';
         
         // Normalize observable
         let host, url, searchUrl;
