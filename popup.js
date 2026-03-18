@@ -1622,12 +1622,15 @@ function updateRiskBadge(card, observable) {
     
     // Blocklist findings
     if (text.includes('listed') && !text.includes('not found')) {
-      const foundMatch = text.match(/found in: (\d+)/i);
+      // Match both "found in: X" and "listed in X blocklist"
+      const foundMatch = text.match(/(?:found in: (\d+)|listed in (\d+) blocklist)/i);
       if (foundMatch) {
-        const found = parseInt(foundMatch[1]);
+        const found = parseInt(foundMatch[1] || foundMatch[2]);
         if (found > 0) {
-          riskScore += found * 8;
-          criticalFindings++;
+          // IP blocklists always show as LOW RISK (5+ points)
+          // 1+ blocklist = 5+ pts = LOW RISK
+          riskScore += found * 5;
+          // Don't mark as critical finding
         }
       } else if (html.includes('listed') && html.includes('e74c3c')) {
         // Red colored "LISTED" indicator
