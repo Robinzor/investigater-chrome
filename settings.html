@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InvestigateR Settings</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: #1a1a2e;
+      color: #eee;
+      padding: 40px 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+      color: #00d4ff;
+    }
+    
+    .subtitle {
+      color: #999;
+      margin-bottom: 32px;
+      font-size: 14px;
+    }
+    
+    .settings-section {
+      background: #16213e;
+      border: 1px solid #0f3460;
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: #00d4ff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .api-key-group {
+      margin-bottom: 20px;
+    }
+    
+    .api-key-group:last-child {
+      margin-bottom: 0;
+    }
+    
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #ccc;
+    }
+    
+    .label-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 3px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-left: 8px;
+    }
+    
+    .badge-required {
+      background: #e74c3c;
+    }
+    
+    .badge-optional {
+      background: #3498db;
+      color: white;
+    }
+    
+    .badge-optional {
+      background: #3498db;
+      color: white;
+    }
+    
+    input[type="text"] {
+      width: 100%;
+      padding: 10px 12px;
+      background: #1a2333;
+      border: 1px solid #0f3460;
+      border-radius: 6px;
+      color: #eee;
+      font-size: 13px;
+      font-family: 'Courier New', monospace;
+      transition: border-color 0.2s;
+    }
+    
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #00d4ff;
+    }
+    
+    input[type="text"]::placeholder {
+      color: #666;
+    }
+    
+    .help-text {
+      font-size: 11px;
+      color: #888;
+      margin-top: 4px;
+    }
+    
+    .help-text a {
+      color: #00d4ff;
+      text-decoration: none;
+    }
+    
+    .help-text a:hover {
+      text-decoration: underline;
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    
+    button {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      flex: 1;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+    
+    .btn-secondary {
+      background: #16213e;
+      color: #00d4ff;
+      border: 1px solid #0f3460;
+    }
+    
+    .btn-secondary:hover {
+      background: #1f2c47;
+      border-color: #00d4ff;
+    }
+    
+    .btn-danger {
+      background: #e74c3c;
+      color: white;
+    }
+    
+    .btn-danger:hover {
+      background: #c0392b;
+    }
+    
+    .success-message,
+    .error-message {
+      padding: 12px 16px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      font-size: 13px;
+      display: none;
+    }
+    
+    .success-message {
+      background: rgba(46, 204, 113, 0.1);
+      border: 1px solid #2ecc71;
+      color: #2ecc71;
+    }
+    
+    .error-message {
+      background: rgba(231, 76, 60, 0.1);
+      border: 1px solid #e74c3c;
+      color: #e74c3c;
+    }
+    
+    .info-box {
+      background: rgba(0, 212, 255, 0.05);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      border-radius: 6px;
+      padding: 16px;
+      margin-bottom: 24px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    
+    .info-box strong {
+      color: #00d4ff;
+    }
+  </style>
+</head>
+<body>
+  <h1>⚙️ InvestigateR Settings</h1>
+  <p class="subtitle">Configure API keys for threat intelligence tools</p>
+  
+  <div class="info-box">
+    <strong>ℹ️ Privacy Notice:</strong> API keys are stored locally in your browser using Chrome's storage API. 
+    They are never sent to any third-party servers except the specific threat intelligence services you're querying.
+  </div>
+  
+  <div id="successMessage" class="success-message"></div>
+  <div id="errorMessage" class="error-message"></div>
+  
+  <div class="settings-section">
+    <div class="section-title">
+      🔑 API Keys
+    </div>
+    
+    <div class="api-key-group">
+      <label>
+        VirusTotal
+        <span class="label-badge badge-required">Required</span>
+      </label>
+      <input type="text" id="virustotal" placeholder="Enter your VirusTotal API key">
+      <div class="help-text">
+        Get your key: <a href="https://www.virustotal.com/gui/my-apikey" target="_blank">VirusTotal API Key</a>
+      </div>
+    </div>
+    
+    <div class="api-key-group">
+      <label>
+        AbuseIPDB
+        <span class="label-badge badge-required">Required</span>
+      </label>
+      <input type="text" id="abuseipdb" placeholder="Enter your AbuseIPDB API key">
+      <div class="help-text">
+        Get your key: <a href="https://www.abuseipdb.com/account/api" target="_blank">AbuseIPDB API Key</a>
+      </div>
+    </div>
+    
+    <div class="api-key-group">
+      <label>
+        AlienVault OTX
+        <span class="label-badge badge-required">Required</span>
+      </label>
+      <input type="text" id="alienvault" placeholder="Enter your AlienVault OTX API key">
+      <div class="help-text">
+        Get your key: <a href="https://otx.alienvault.com/api" target="_blank">AlienVault OTX API</a>
+      </div>
+    </div>
+    
+    <div class="api-key-group">
+      <label>
+        abuse.ch (ThreatFox, MalwareBazaar, URLhaus)
+        <span class="label-badge badge-required">Required</span>
+      </label>
+      <input type="text" id="abusech" placeholder="Enter your abuse.ch API key">
+      <div class="help-text">
+        Get your key: <a href="https://abuse.ch/" target="_blank">abuse.ch API</a>
+      </div>
+    </div>
+    
+    <div class="api-key-group">
+      <label>
+        IPInfo
+        <span class="label-badge badge-required">Required</span>
+      </label>
+      <input type="text" id="ipinfo" placeholder="Enter your IPInfo API token">
+      <div class="help-text">
+        Get your key: <a href="https://ipinfo.io/signup" target="_blank">IPInfo Signup</a>
+      </div>
+    </div>
+    
+    <div class="api-key-group">
+      <label>
+        Hybrid Analysis
+        <span class="label-badge badge-required">Required</span>
+      </label>
+      <input type="text" id="hybridanalysis" placeholder="Enter your Hybrid Analysis API key">
+      <div class="help-text">
+        Get your key: <a href="https://www.hybrid-analysis.com/apikeys/info" target="_blank">Hybrid Analysis API</a>
+      </div>
+    </div>
+    
+    <div class="api-key-group">
+      <label>
+        URLquery
+        <span class="label-badge badge-required">Required</span>
+      </label>
+      <input type="text" id="urlquery" placeholder="Enter your URLquery API key">
+      <div class="help-text">
+        Get your key: <a href="https://urlquery.net/user/api" target="_blank">URLquery API</a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="settings-section">
+    <div class="section-title">
+      🔓 Optional Premium APIs
+    </div>
+    <p style="font-size: 13px; color: #999; margin-bottom: 16px; line-height: 1.6;">
+      These tools work with free APIs by default, but you can optionally add API keys for premium features:
+    </p>
+    
+    <div class="api-key-group">
+      <label>
+        URLScan.io
+        <span class="label-badge badge-optional">Optional</span>
+      </label>
+      <input type="text" id="urlscan" placeholder="Enter your URLScan.io API key (optional)">
+      <div class="help-text">
+        Free: Search existing scans (no key needed) | Premium: <a href="https://urlscan.io/user/profile/" target="_blank">URLScan.io API Key</a>
+      </div>
+    </div>
+    
+    <div class="api-key-group">
+      <label>
+        Shodan
+        <span class="label-badge badge-optional">Optional</span>
+      </label>
+      <input type="text" id="shodan" placeholder="Enter your Shodan API key (optional)">
+      <div class="help-text">
+        Free: Uses InternetDB (no key needed) | Premium: <a href="https://account.shodan.io/" target="_blank">Shodan API Key</a>
+      </div>
+    </div>
+    
+    <div class="api-key-group">
+      <label>
+        GreyNoise
+        <span class="label-badge badge-optional">Optional</span>
+      </label>
+      <input type="text" id="greynoise" placeholder="Enter your GreyNoise API key (optional)">
+      <div class="help-text">
+        Free: Uses Community API (no key needed) | Premium: <a href="https://viz.greynoise.io/account/api-key" target="_blank">GreyNoise API</a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="settings-section">
+    <div class="section-title">
+      ⚙️ Options
+    </div>
+    
+    <div class="api-key-group">
+      <label style="display: flex; align-items: center; cursor: pointer;">
+        <input type="checkbox" id="passiveMode" style="width: auto; margin-right: 10px;">
+        <span>🕵️ Passive Mode (Stealth Investigation)</span>
+      </label>
+      <div class="help-text">
+        <strong>Enable this to avoid alerting attackers.</strong><br>
+        Passive mode only uses cached databases and threat feeds - never contacts target infrastructure directly.
+      </div>
+    </div>
+  </div>
+  
+  <div class="settings-section">
+    <div class="section-title">
+      ℹ️ Free Tools (No API Key Required)
+    </div>
+    <p style="font-size: 13px; color: #999; line-height: 1.6;">
+      The following tools work completely free without any API keys:<br>
+      • <strong>Shodan InternetDB</strong> - Open ports and vulnerabilities (free API)<br>
+      • <strong>GreyNoise Community</strong> - Internet noise detection (free API)<br>
+      • <strong>PhishTank</strong> - Phishing URL database<br>
+      • <strong>OpenPhish</strong> - Phishing feed<br>
+      • <strong>SANS ISC</strong> - Internet Storm Center<br>
+      • <strong>WHOIS</strong> - Domain registration info<br>
+      • <strong>DNS Records</strong> - DNS lookups (Google DNS)<br>
+      • <strong>IP/Domain Blocklists</strong> - Multiple blocklist checks
+    </p>
+  </div>
+  
+  <div class="button-group">
+    <button class="btn-primary" id="saveBtn">💾 Save Settings</button>
+    <button class="btn-secondary" id="testBtn">🧪 Test API Keys</button>
+    <button class="btn-danger" id="clearBtn">🗑️ Clear All Keys</button>
+  </div>
+  
+  <script src="settings.js"></script>
+</body>
+</html>

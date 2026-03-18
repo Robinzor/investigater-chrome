@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InvestigateR</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="header-left">
+        <h1>🔍 InvestigateR</h1>
+        <span id="detectionBadge" class="detection-badge hidden"></span>
+      </div>
+      <div class="header-right">
+        <label class="passive-toggle" title="Enable stealth mode - only use cached databases, no direct queries to target">
+          <input type="checkbox" id="passiveModeToggle">
+          <span class="toggle-slider"></span>
+          <span class="toggle-label">🕵️ Passive Mode</span>
+        </label>
+        <button id="fullscreenBtn" class="icon-btn" title="Fullscreen">⛶</button>
+        <button id="settingsBtn" class="icon-btn" title="Settings">⚙️</button>
+      </div>
+    </header>
+    
+    <div class="input-section">
+      <textarea 
+        id="observableInput" 
+        placeholder="Enter IPs, domains, URLs, or hashes (one per line)&#10;&#10;Examples:&#10;8.8.8.8&#10;example.com&#10;https://suspicious-site.com&#10;44d88612fea8a8f36de82e1278abb02f"
+        rows="5"
+      ></textarea>
+      
+      <button id="investigateBtn" class="primary-btn">
+        🔍 Investigate
+      </button>
+      
+      <div class="tool-selection">
+        <div class="selection-header">
+          <label class="section-label">Select Tools:</label>
+          <div class="selection-buttons">
+            <button id="selectAllBtn" class="mini-btn">✓ Select All</button>
+            <button id="clearAllBtn" class="mini-btn">✗ Clear All</button>
+          </div>
+        </div>
+        
+        <!-- Free Tools Section -->
+        <div class="tool-section">
+          <div class="section-header">
+            <span class="section-badge free">🆓 Free Tools (No API Key)</span>
+          </div>
+          <div class="tool-grid" id="freeToolGrid">
+
+          
+            <label class="tool-item" data-tool="shodan" data-types="ip" data-section="free">
+              <input type="checkbox" class="tool-checkbox" value="shodan">
+              <span>Shodan IDB</span>
+            </label>
+            <label class="tool-item" data-tool="phishtank" data-types="url,domain" data-section="free">
+              <input type="checkbox" class="tool-checkbox" value="phishtank">
+              <span>PhishTank</span>
+            </label>
+            <label class="tool-item" data-tool="openphish" data-types="url,domain" data-section="free">
+              <input type="checkbox" class="tool-checkbox" value="openphish">
+              <span>OpenPhish</span>
+            </label>
+            <label class="tool-item" data-tool="sansisc" data-types="ip" data-section="free">
+              <input type="checkbox" class="tool-checkbox" value="sansisc">
+              <span>SANS ISC</span>
+            </label>
+            <label class="tool-item" data-tool="whois" data-types="ip,domain" data-section="free">
+              <input type="checkbox" class="tool-checkbox" value="whois">
+              <span>WHOIS</span>
+            </label>
+            <label class="tool-item" data-tool="dnsrecords" data-types="domain" data-section="free">
+              <input type="checkbox" class="tool-checkbox" value="dnsrecords">
+              <span>DNS Records</span>
+            </label>
+            <label class="tool-item" data-tool="ipblocklists" data-types="ip" data-section="free">
+              <input type="checkbox" class="tool-checkbox" value="ipblocklists">
+              <span>IP Blocklists</span>
+            </label>
+            <label class="tool-item" data-tool="domainblocklists" data-types="domain,url" data-section="free">
+              <input type="checkbox" class="tool-checkbox" value="domainblocklists">
+              <span>Domain Blocklists</span>
+            </label>
+            <label class="tool-item" data-tool="greynoise" data-types="ip" data-section="free">
+              <input type="checkbox" class="tool-checkbox" value="greynoise">
+              <span>GreyNoise</span>
+            </label>
+            <label class="tool-item" data-tool="cloudflareip" data-types="ip,domain,url" data-section="free">
+              <input type="checkbox" class="tool-checkbox" value="cloudflareip">
+              <span>Cloudflare</span>
+            </label>
+            <label class="tool-item" data-tool="urlscan" data-types="url,domain" data-section="free">
+              <input type="checkbox" class="tool-checkbox" value="urlscan">
+              <span>URLScan.io</span>
+            </label>
+            <label class="tool-item" data-tool="urlquery" data-types="url,domain,ip" data-section="premium" data-requires-key="true">
+              <input type="checkbox" class="tool-checkbox" value="urlquery">
+              <span>URLquery</span>
+            </label>
+          </div>
+        </div>
+        
+        <!-- API Required Tools Section -->
+        <div class="tool-section" id="apiToolSection">
+          <div class="section-header">
+            <span class="section-badge api">🔑 Premium Tools (API Key Required)</span>
+            <span class="api-status" id="apiStatus"></span>
+          </div>
+          <div class="tool-grid" id="apiToolGrid">
+            <label class="tool-item" data-tool="virustotal" data-types="ip,domain,url,hash" data-section="api" data-active="true">
+              <input type="checkbox" class="tool-checkbox" value="virustotal" data-requires-key="true">
+              <span>VirusTotal</span>
+            </label>
+            <label class="tool-item" data-tool="abuseipdb" data-types="ip" data-section="api">
+              <input type="checkbox" class="tool-checkbox" value="abuseipdb" data-requires-key="true">
+              <span>AbuseIPDB</span>
+            </label>
+            <label class="tool-item" data-tool="alienvault" data-types="ip,domain,hash" data-section="api">
+              <input type="checkbox" class="tool-checkbox" value="alienvault" data-requires-key="true">
+              <span>AlienVault OTX</span>
+            </label>
+            <label class="tool-item" data-tool="ipinfo" data-types="ip" data-section="api">
+              <input type="checkbox" class="tool-checkbox" value="ipinfo" data-requires-key="true">
+              <span>IPInfo</span>
+            </label>
+            <label class="tool-item" data-tool="threatfox" data-types="ip,domain,hash" data-section="api">
+              <input type="checkbox" class="tool-checkbox" value="threatfox" data-requires-key="true">
+              <span>ThreatFox</span>
+            </label>
+            <label class="tool-item" data-tool="malwarebazaar" data-types="hash" data-section="api">
+              <input type="checkbox" class="tool-checkbox" value="malwarebazaar" data-requires-key="true">
+              <span>MalwareBazaar</span>
+            </label>
+            <label class="tool-item" data-tool="urlhaus" data-types="url,domain,ip" data-section="api">
+              <input type="checkbox" class="tool-checkbox" value="urlhaus" data-requires-key="true">
+              <span>URLhaus</span>
+            </label>
+            <label class="tool-item" data-tool="hybridanalysis" data-types="hash,url" data-section="api">
+              <input type="checkbox" class="tool-checkbox" value="hybridanalysis" data-requires-key="true">
+              <span>Hybrid Analysis</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="loadingIndicator" class="loading hidden">
+      <div class="spinner"></div>
+      <span>Querying threat intelligence sources...</span>
+    </div>
+    
+    <div id="results" class="results-section"></div>
+    
+    <div id="noResults" class="no-results hidden">
+      No results yet. Enter observables and click Investigate.
+    </div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
