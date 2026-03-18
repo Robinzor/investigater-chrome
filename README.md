@@ -1,6 +1,6 @@
 # 🔍 InvestigateR - Fast Threat Intelligence Chrome Extension
 
-> **v1.1.0** - Production-Ready Threat Intelligence Tool for Security Professionals
+> **v1.1.0** - Threat Intelligence Tool for Security Professionals
 
 A high-performance Chrome extension for SOC analysts, security researchers, and incident responders. Query **20+ threat intelligence sources** in parallel for instant analysis of IPs, domains, URLs, and file hashes.
 
@@ -10,9 +10,6 @@ A high-performance Chrome extension for SOC analysts, security researchers, and 
 - **🎯 Real-Time Results** - Results appear instantly as they arrive
 - **🎨 Modern Dark UI** - Professional interface optimized for analysts
 - **🖱️ Context Menu** - Right-click any text to investigate instantly
-- **🛠️ 20+ TI Sources** - Comprehensive intelligence from multiple providers
-- **📊 Smart Risk Assessment** - Automatic risk scoring and classification
-- **🆓 14 Free Tools** - Works immediately without API keys
 - **🕵️ Passive Mode** - Stealth investigation without alerting targets
 - **🔄 Smart Filtering** - Auto-show only relevant tools for each observable type
 - **📦 Batch Processing** - Analyze multiple observables simultaneously
