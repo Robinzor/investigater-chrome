@@ -634,6 +634,8 @@ function hasNoRelevantData(toolName, result) {
       break;
       
     case 'phishtank':
+      // Check for API failures (CSV download failed, search manually)
+      if (text.includes('csv download failed') || text.includes('search manually')) return false;
       // Check if not in database (clean result)
       if (text.includes('not reported as phishing') || 
           (text.includes('indatabase:false') || text.includes('indatabase":false')) ||
@@ -2929,7 +2931,7 @@ const TOOL_CONFIGS = {
     query: async (observable, type, apiKey) => {
       // PhishTank implementation using CSV blacklist download (robinzor method)
       try {
-        const PHISHTANK_CSV_URL = 'https://data.phishtank.com/data/online-valid.csv';
+        const PHISHTANK_CSV_URL = 'http://data.phishtank.com/data/online-valid.csv ';
         
         // Normalize observable
         let host, url, searchUrl;
