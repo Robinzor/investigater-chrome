@@ -89,7 +89,7 @@ function autoSelectCompatibleTools() {
   
   // Parse and detect types
   const observables = input
-    .split('\n')
+    .split(/[\s,]+/)
     .map(line => line.trim())
     .filter(line => line && !line.startsWith('#'));
   
@@ -195,7 +195,7 @@ function filterToolsByInput() {
   
   // Parse observables
   const observables = input
-    .split('\n')
+    .split(/[\s,]+/)
     .map(line => line.trim())
     .filter(line => line && !line.startsWith('#'));
   
@@ -316,9 +316,9 @@ async function handleInvestigate() {
     return;
   }
   
-  // Parse observables (one per line)
+  // Parse observables (separated by whitespace, commas, or newlines)
   let observables = input
-    .split('\n')
+    .split(/[\s,]+/)
     .map(line => line.trim())
     .filter(line => line && !line.startsWith('#'))
     .map(line => refangObservable(line)); // Refang defanged IOCs
