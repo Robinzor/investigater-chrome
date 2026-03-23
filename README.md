@@ -2,7 +2,7 @@
 
 > **v1.1.0** - Threat Intelligence Tool for Security Professionals
 
-A high-performance Chrome extension for SOC analysts, security researchers, and incident responders. Query **20+ threat intelligence sources** in parallel for instant analysis of IPs, domains, URLs, and file hashes.
+A high-performance Chrome extension for SOC analysts, security researchers, and incident responders. Query threat intelligence sources in parallel for instant analysis of IPs, domains, URLs, and file hashes.
 
 ## ✨ Key Features
 
