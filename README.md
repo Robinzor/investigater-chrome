@@ -4,7 +4,8 @@
 
 A high-performance Chrome extension for SOC analysts, security researchers, and incident responders. Query threat intelligence sources in parallel for instant analysis of IPs, domains, URLs, and file hashes.
 
-<img width="1185" height="708" alt="secret-message" src="https://github.com/user-attachments/assets/838c33e1-aac1-4863-ab09-3a502cb93356" />
+<img width="594" height="437" alt="investigater1337" src="https://github.com/user-attachments/assets/68a98550-2a85-483f-844e-7365e66d0ef0" />
+
 
 ## ✨ Key Features
 
