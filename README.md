@@ -4,6 +4,8 @@
 
 A high-performance Chrome extension for SOC analysts, security researchers, and incident responders. Query threat intelligence sources in parallel for instant analysis of IPs, domains, URLs, and file hashes.
 
+<img width="1185" height="708" alt="secret-message" src="https://github.com/user-attachments/assets/838c33e1-aac1-4863-ab09-3a502cb93356" />
+
 ## ✨ Key Features
 
 - **⚡ Lightning Fast** - All queries execute in parallel for maximum speed
